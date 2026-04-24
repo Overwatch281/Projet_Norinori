@@ -51,7 +51,7 @@ def parse_grid(filepath):
             # Ajouter la case dans le dictionnaire des zones
             if zone_id not in zones:
                 zones[zone_id] = []
-            zones[zone_id].append((i, j))
+            zones[zone_id].append((i+1, j+1))
 
         grille.append(ligne_grille)
 
