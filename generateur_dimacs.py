@@ -8,6 +8,9 @@ def var(i,j,m):
     return i*m + j + 1
 
 
+def voisins_valides(i, j, n, m):
+    candidats = [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]
+    return [(r, c) for (r, c) in candidats if 0 <= r < n and 0 <= c < m]
 
 
 
