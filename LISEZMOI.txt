@@ -1,0 +1,66 @@
+MODE D'EMPLOI
+
+Ce programme résout automatiquement des grilles du jeu Norinori
+en utilisant un SAT-solveur (MiniSat).
+
+FORMAT D'ENTRÉE
+
+La grille doit être décrite dans un fichier texte (.txt) avec
+le format suivant :
+
+  - Ligne 1 : deux entiers "n m" séparés par un espace
+               n = nombre de lignes, m = nombre de colonnes
+
+  - Lignes suivantes : les identifiants de zone de chaque case,
+                       séparés par des espaces.
+
+Exemple de fichier (grille 5x6 à 8 zones) :
+
+  5 6
+  A A A B B B
+  A A C C B B
+  D D C C E E
+  D D F F E E
+  G G F F H H
+
+FORMAT DE SORTIE
+
+Le programme affiche :
+  - La grille des zones lue en entrée
+  - La solution avec ■ pour une case noire, □ pour une case blanche
+  - Une vérification zone par zone (exactement 2 cases noires par zone)
+
+UTILISATION
+
+Commande :
+
+  python3 main.py instances/<fichier>.txt
+
+Exemples :
+
+  python3 main.py instances/test_2x2.txt
+  python3 main.py instances/test_5x6.txt
+
+EXEMPLES DE RÉSULTATS
+
+Pour la grille instances/test_5x6.txt :
+
+  Grille en entrée :        Solution :
+  A A A B B B               ■ ■ □ □ ■ ■
+  A A C C B B               □ □ ■ ■ □ □
+  D D C C E E               ■ ■ □ □ ■ ■
+  D D F F E E               □ □ ■ ■ □ □
+  G G F F H H               ■ ■ □ □ ■ ■
+
+FICHIERS INTERMÉDIAIRES GÉNÉRÉS
+
+Pour une grille "instances/ma_grille.txt", le programme génère :
+  - instances/ma_grille.cnf  : formule CNF au format DIMACS
+  - instances/ma_grille.sat  : solution brute produite par MiniSat
+
+
+CAS D'ERREUR
+
+  - Si la grille n'a pas de solution : affiche "UNSAT"
+  - Si le fichier est introuvable     : affiche un message d'erreur
+  - Si MiniSat n'est pas installé     : affiche un message d'erreur

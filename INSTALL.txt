@@ -1,0 +1,38 @@
+Pré-requis
+
+1. Python 3.8 ou supérieur
+   Téléchargement : https://www.python.org/downloads/
+
+2. MiniSat (SAT-solveur)
+   Téléchargement : http://minisat.se/MiniSat.html
+
+   Installation sur Linux (Debian/Ubuntu) :
+     sudo apt-get install minisat
+
+   Installation sur MacOS :
+     brew install minisat
+
+   Installation sur Windows :
+     Télécharger l'exécutable sur http://minisat.se/MiniSat.html
+     et l'ajouter au PATH système.
+
+Exécution
+
+Aucune compilation nécessaire (Python est un langage interprété).
+
+Pour résoudre une grille Norinori, exécuter la commande suivante
+depuis le dossier du projet :
+
+  python3 main.py instances/<nom_de_la_grille>.txt
+
+Exemple :
+
+  python3 main.py instances/test_5x6.txt
+
+FICHIERS NÉCESSAIRES
+
+main.py               pipeline principal
+lecteur.py            lecture de la grille
+generateur_dimacs.py  génération du fichier DIMACS
+affichage_solution.py affichage de la solution
+instances/            dossier contenant les grilles de test
