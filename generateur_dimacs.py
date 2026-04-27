@@ -1,3 +1,21 @@
+"""
+Rôle : Traduire une grille Norinori en un fichier DIMACS
+       (.cnf) lisible par un SAT-solveur (ex: MiniSat).
+
+Rappel des règles :
+  Règle 1   : exactement 2 cases noires par zone
+                = "au moins 2" ET "au plus 2"
+  Règles 2+3: chaque case noire a exactement 1 voisin
+              orthogonal noir
+                = "au moins 1 voisin" ET "au plus 1 voisin"
+
+Numérotation des variables SAT :
+numero_variable(i, j) = i * m + j + 1
+(les variables SAT commencent à 1, jamais à 0)
+"""
+
+
+
 from itertools import combinations
 
 def var(i,j,m):
@@ -10,14 +28,19 @@ def generer_regle1(zones, m):
     for zone, cases in zones.items():
         var_zone = [var(i,j,m) for (i,j) in cases]
         
-        # Au moins 2 : pour chaque variable, les autres ne peuvent pas être toutes fausses
+        # AU MOINS 1 case noire dans la zone (interdit que tout soit blanc)
+        clauses.append(var_zone[:])
+
+        # AU MOINS 2 : si Ci est noire, au moins une autre l'est aussi
         for idx, vi in enumerate(var_zone):
             autres = [vj for vj in var_zone if vj != vi]
             clauses.append([-vi] + autres)
         
-        # Au plus 2 : interdire 3 vraies en même temps
-        for vi, vj, vk in combinations(var_zone, 3):
-            clauses.append([-vi, -vj, -vk])  # ✅ CORRIGÉ
+        # AU PLUS 2 : interdire TOUTES les combinaisons > 2
+        for k in range(3, len(var_zone) + 1):  # 3,4,5,...
+            for combi in combinations(var_zone, k):
+                clause = [-v for v in combi]  # toutes négatives
+                clauses.append(clause)
     return clauses
 
 def voisins(i, j, n, m):
