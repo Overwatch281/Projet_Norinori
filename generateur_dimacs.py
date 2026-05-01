@@ -19,12 +19,31 @@ numero_variable(i, j) = i * m + j + 1
 from itertools import combinations
 
 def var(i,j,m):
+    """
+    Retourne le numéro de variable SAT (≥ 1) pour la case (i, j).
+
+    Paramètres :
+      i (int) : ligne
+      j (int) : colonne
+      m (int) : nombre de colonnes de la grille
+    """
     return i*m + j + 1
 
 
 
 def generer_regle1(zones, m):
+    """
+    Génère les clauses imposant exactement 2 cases noires par zone.
+
+    Paramètres :
+      zones (dict) : { id_zone: [(i,j), ...] }
+      m     (int)  : nombre de colonnes
+
+    Retourne :
+      clauses (list[list[int]]) : liste de clauses
+    """
     clauses = []
+    # Numéros de variables pour toutes les cases de cette zone
     for zone, cases in zones.items():
         var_zone = [var(i,j,m) for (i,j) in cases]
         
@@ -44,6 +63,13 @@ def generer_regle1(zones, m):
     return clauses
 
 def voisins(i, j, n, m):
+    """
+    Retourne la liste des cases voisines orthogonales valides.
+
+    Paramètres :
+      i, j (int) : coordonnées de la case
+      n, m (int) : dimensions de la grille
+    """
     resultat = []
     directions = [(-1,0),(1,0),(0,-1),(0,1)]
 
